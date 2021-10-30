@@ -1,18 +1,18 @@
 from math import floor
 from Genetic_Functions import cal_fitness, crossover, generate_cost_matrix, generate_population, mutate, sortanddivide
 
-with open("cities.txt","r") as file:
+with open("TSP_Genetic\cities.txt","r") as file:
     Cities = file.read().split(",")
-# LIst of Cities
+# List of Cities
 
-Cost_Matrix = generate_cost_matrix("cost-matrix.txt")
+Cost_Matrix = generate_cost_matrix("TSP_Genetic\cost-matrix.txt")
 #Cost Matrix that may non-commutative values, i.e. cost(a,b) != cost(b,a)
 #Read from "cost-matrix.txt" file
 
-
+print("Generation\t Best Fitness Value\t Best Tour")
 
 #Generating Gen0
-population = generate_population(5,len(Cities))
+population = generate_population(5,len(Cities),Cities)
 #print(population)
 
 best_fitness = 0
@@ -20,18 +20,18 @@ best_streak = 1
 best_genome = list()
 
 generation = 0
+
+
 while(generation < 100):
 #We run this code for a maximum of 100 iterations or
 #until we get the same fitness value for 10 consecutive iterations.
     if best_streak == 10:
         break
-    
-    generation += 1
-    
+   
     #Calculate Fitness of each Genome.
     fitness = list()
     for genome in population:
-        fitness.append((cal_fitness(genome), genome))
+        fitness.append((cal_fitness(genome,Cost_Matrix,Cities), genome))
         #Update the best_fitness value
 
     #Sort the population based on Fitness value
@@ -77,13 +77,13 @@ while(generation < 100):
     print("Best fitness : ", best_fitness)
     print("Best Sequence", best_genome)
     '''
-
+    print(f"{generation}\t  {best_fitness}\t\t {best_genome}")
     #We have our Child Generation now...
     population = children
+    generation += 1
     
 
 
-
 print(f"\nBest Tour Sequence : {best_genome}")
-print(f"This best was sequence found in  {generation} generations")
+print(f"This best was sequence found in  {generation - 1} generations")
 print(f"The minimum cost of the sequence is {best_fitness}")

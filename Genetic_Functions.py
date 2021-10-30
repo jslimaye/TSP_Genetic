@@ -8,9 +8,9 @@ Genome = List[str]
 Population = List[Genome]
 #Defining Constructs of reused elements to create context...
 
-def generate_cost_matrix(filename: str) -> Cost_Matrix:
+def generate_cost_matrix(filename) -> Cost_Matrix:
     costs = []
-    with open("cost-matrix.txt","r") as file:
+    with open(filename,"r") as file:
         for line in file:
             temp = line.split(",")
             for i in range(len(temp)):
@@ -19,19 +19,19 @@ def generate_cost_matrix(filename: str) -> Cost_Matrix:
     return costs
     
 
-def generate_genome(length: int) -> Genome:
+def generate_genome(length: int, cities: Cities) -> Genome:
     genome = list()
     while len(genome) < length:
-        i = randint(0,len(Cities) - 1)
-        if Cities[i] in genome:
+        i = randint(0,len(cities) - 1)
+        if cities[i] in genome:
             continue
         else:
-            genome.append(Cities[i])
+            genome.append(cities[i])
     return genome
 #Generates a Genome 
 
-def generate_population(size: int, genome_length: int) -> Population:
-    return [generate_genome(genome_length) for _ in range(size)]
+def generate_population(size: int, genome_length: int, cities:Cities) -> Population:
+    return [generate_genome(genome_length,cities) for _ in range(size)]
 #Generates a sequence of n Genomes; n = size
 
 def crossover(a: Genome, b: Genome) -> Genome:
