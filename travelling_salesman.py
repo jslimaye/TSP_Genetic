@@ -6,7 +6,7 @@ with open("TSP_Genetic\cities.txt","r") as file:
 # List of Cities
 
 Cost_Matrix = generate_cost_matrix("TSP_Genetic\cost-matrix.txt")
-#Cost Matrix that may non-commutative values, i.e. cost(a,b) != cost(b,a)
+#Cost Matrix maybe asymmetric, i.e. cost(a,b) != cost(b,a)
 #Read from "cost-matrix.txt" file
 
 print("Generation\t Best Fitness Value\t Best Tour")
