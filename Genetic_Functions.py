@@ -60,7 +60,7 @@ def mutate(a: Genome) -> Genome:
         a[j] = a[i]
         a[i] = temp
     return a
-#Mutation Function
+#Mutation Function: for a random number of times ranging from 1 to n/2, randomly swap any 2 cities from the genome.
 
 def sortanddivide(listofTuples):
     listofTuples = sorted(listofTuples)

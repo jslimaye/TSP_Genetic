@@ -1,11 +1,16 @@
 from math import floor
 from Genetic_Functions import cal_fitness, crossover, generate_cost_matrix, generate_population, mutate, sortanddivide
 
-with open("TSP_Genetic\cities.txt","r") as file:
+#Paths to input files cities.txt and cost-matrix.txt
+citypath = "D:\Study\MFDS\TSP_Genetic\cities.txt"
+costpath = "D:\Study\MFDS\TSP_Genetic\cost-matrix.txt"
+#update as required
+
+with open(citypath,"r") as file:
     Cities = file.read().split(",")
 # List of Cities
 
-Cost_Matrix = generate_cost_matrix("TSP_Genetic\cost-matrix.txt")
+Cost_Matrix = generate_cost_matrix(costpath)
 #Cost Matrix maybe asymmetric, i.e. cost(a,b) != cost(b,a)
 #Read from "cost-matrix.txt" file
 
@@ -13,7 +18,7 @@ print("Generation\t Best Fitness Value\t Best Tour")
 
 #Generating Gen0
 population = generate_population(5,len(Cities),Cities)
-#print(population)
+print(f"Initial Population is \n{population}\n")
 
 best_fitness = 0
 best_streak = 1
@@ -43,11 +48,12 @@ while(generation < 100):
     elif min_fitness < best_fitness:
         best_fitness = min_fitness
         best_streak = 1
-        best_genome = sorted_population[0]
     else:
         best_streak += 1
         #add 1 to streak if same fitness value continues.
 
+    best_genome = sorted_population[0]
+    #genome with the best value of fitness function
 
     #Divide the population to work a crossover function.
     br = floor(len(population)/2)
@@ -77,7 +83,7 @@ while(generation < 100):
     print("Best fitness : ", best_fitness)
     print("Best Sequence", best_genome)
     '''
-    print(f"{generation}\t  {best_fitness}\t\t {best_genome}")
+    print(f"{generation}\t\t  {best_fitness}\t\t\t {best_genome}")
     #We have our Child Generation now...
     population = children
     generation += 1
@@ -85,5 +91,5 @@ while(generation < 100):
 
 
 print(f"\nBest Tour Sequence : {best_genome}")
-print(f"This best was sequence found in  {generation - 1} generations")
+print(f"This best was sequence found in  {generation} generations")
 print(f"The minimum cost of the sequence is {best_fitness}")
